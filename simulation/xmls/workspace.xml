@@ -1,0 +1,5 @@
+<mujoco model="workspace">
+
+    <geom name="waypoint_1" pos="0.4283348942638689 -0.1072367342704746 -0.4038857398645541" size="0.04" type="sphere" rgba="1 1 1 0.5" contype="0" conaffinity="0" />
+    <geom name="waypoint_2" pos="-0.4254032170364874 0.2850984984594145 0.13726373364738892" size="0.04" type="sphere" rgba="1 1 1 0.5" contype="0" conaffinity="0" />
+</mujoco>

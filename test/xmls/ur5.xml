@@ -1,0 +1,33 @@
+<mujoco model="ur5">
+    <!-- Modified from: https://github.com/cxy1997/Robotiq-UR5/tree/master/xmls -->
+    <asset>
+        <mesh file="base.stl" />
+        <mesh file="shoulder.stl" />
+        <mesh file="upperarm.stl" />
+        <mesh file="forearm.stl" />
+        <mesh file="wrist1.stl" />
+        <mesh file="wrist2.stl" />
+        <mesh file="wrist3.stl" />
+        <mesh file="kinova_robotiq_coupler.stl" />
+        <mesh file="robotiq_85_base_link.stl" />
+        <mesh file="robotiq_85_finger_link.stl" />
+        <mesh file="robotiq_85_finger_tip_link.stl" />
+        <mesh file="robotiq_85_inner_knuckle_link.stl" />
+        <mesh file="robotiq_85_knuckle_link.stl" />
+        <material name="RobMat" specular="0.9" shininess="0.5" reflectance="0" rgba="0.7 0.7 0.7 1" emission="0.1" />
+        <material name="GriMat" specular="0.9" shininess="0.5" reflectance="0" rgba="0.1 0.1 0.1 1" emission="0.1" />
+        <material name="Light" specular="0" shininess="0.6" reflectance="0.9" rgba="0.5 0.5 1 1" emission="0.7" />
+    </asset>
+
+    <worldbody>
+
+        <include file="ur5_robot.xml"></include>
+
+    </worldbody>
+
+    <include file="ur5_velocity_actuators.xml"></include>
+
+    <sensor>
+	<framepos name="end_effector_pos" objtype="site" objname="end_effector"/>
+    </sensor>
+</mujoco>

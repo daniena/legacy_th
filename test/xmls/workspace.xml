@@ -1,0 +1,7 @@
+<mujoco model="workspace">
+    <geom name="obstacle_1" pos="-0.2037357144023145 0.4107166537863437 -0.2725214473165785" size="0.07038851479034344" type="sphere" rgba="0.8 0.45 0.15 1" contype="0" conaffinity="0" />
+    <geom name="obstacle_2" pos="0.831026679766761 0.3947493893358117 0.6435993829798637" size="0.16598414836249067" type="sphere" rgba="0.8 0.45 0.15 1" contype="0" conaffinity="0" />
+
+    <geom name="waypoint_1" pos="-0.1939530643539239 0.5378067912960776 -0.27434357020001887" size="0.04" type="sphere" rgba="1 1 1 0.5" contype="0" conaffinity="0" />
+    <geom name="waypoint_2" pos="-0.3396434684327556 -0.3114449096441291 -0.2924833296974897" size="0.04" type="sphere" rgba="1 1 1 0.5" contype="0" conaffinity="0" />
+</mujoco>

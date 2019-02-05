@@ -1,0 +1,52 @@
+<mujoco model="world">
+    <!-- Modified from: https://github.com/cxy1997/Robotiq-UR5/tree/master/xmls -->
+    <compiler angle="radian" meshdir="meshes" />
+
+    <option gravity="0 0 0" cone="elliptic" timestep="0.02" />
+
+    <size njmax="500" nconmax="100" />
+
+    <visual>
+        <map znear="0.001" />
+    </visual>
+
+    <default>
+        <light castshadow="false" diffuse="1 1 1" />
+        <joint frictionloss="1" damping="0.01" />
+        <camera fovy="60" />
+    </default>
+
+    <asset>
+        <material name="BasketMat" specular="0" shininess="0" reflectance="0" rgba="0.26 0.16 0.16796875 1" emission="0" />
+    </asset>
+
+    <worldbody>
+        <body pos="-0.16 0.90 0.02" euler="4.71238898 0 3.14159265">
+            <body euler="0 -0.82 0">
+                <camera name="workbench_camera" euler="0.25 0 0" fovy="43" />
+            </body>
+        </body>
+        <body pos="-1 1.52 0.64" euler="4.71238898 0 3.14159265">
+            <body euler="-0.23 0 0">
+                <camera name="upper_camera" euler="0 0.09 0" fovy="41" />
+            </body>
+        </body>
+
+        <light directional="true" pos="-0.5 0.5 3" dir="0 0 -1" />
+        <light directional="false" pos="-0.5 0.5 1.5" dir="0 -1 0" />
+	<geom name="workbench_bottom" pos="0 0 -0.45" size="0.07 0.45" type="cylinder" rgba="0 0 0 1" material="BasketMat"/>
+        <geom name="floor" pos="0 0 -0.9" size="10 10 1" type="plane" rgba="0.7 0.8 1 0.6" material="BasketMat" />
+        <!--geom name="wall_1" pos="0 -1.4 1" size="2.5 2.5 1" type="plane" quat="0.707107 -0.707107 0 0" rgba="0.95 0.95 0.95 1" material="BasketMat" /-->
+        <!--geom name="wall_2" pos="-2.185 0 1" size="2.5 2.5 1" type="plane" quat="0.707107 0 0.707107 0" rgba="0.95 0.95 0.95 1" material="BasketMat" /-->
+
+	<!-- If the workbench_bottom cylinder had a radius of 0.075 or larger, the UR5 would collide with the cyllinder when link 2 had near -3*pi/2 or near pi/2 rotation, -->
+	<!-- even though link 1 nor any other part of the manipulator would be visually touching it. -->
+	<!-- What worked was making it slightly smaller than the UR5 base mesh, i.e. smaller than 0.075 in diameter. 0.05 worked as well, but 0.07 works and looks much more natural. -->
+
+	<include file="workspace.xml"></include>
+
+    </worldbody>
+
+    <include file="ur5.xml"></include>
+
+</mujoco>

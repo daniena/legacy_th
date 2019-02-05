@@ -1,0 +1,23 @@
+<mujoco model="ur5_position_actuators">
+    <!-- Modified from: https://github.com/cxy1997/Robotiq-UR5/tree/master/xmls -->
+    <default>
+      <!--velocity kv='0.5' gear = "1"/-->
+      <!-- THIS WORKS:joint damping="1" frictionloss ="0" stiffness="0"/>
+      <position kp="1" gear = "1"/-->
+      <!-- THIS WORKS BETTER:joint damping="1" frictionloss ="0" stiffness="0"/>
+      <position kp="2" gear = "1"/-->
+      <!-- EVEN BETTER!:joint damping="1" frictionloss ="0" stiffness="0"/>
+      <position kp="10" gear = "1"/-->
+      <joint damping="1" frictionloss ="0" stiffness="0"/>
+      <position kp="20" gear = "1"/>
+    </default>
+
+    <actuator>
+        <position name="joint1_position" joint="joint1"/>
+        <position name="joint2_position" joint="joint2"/>
+        <position name="joint3_position" joint="joint3"/>
+        <position name="joint4_position" joint="joint4"/>
+        <position name="joint5_position" joint="joint5"/>
+        <position name="joint6_position" joint="joint6"/>
+    </actuator>
+</mujoco>

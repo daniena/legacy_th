@@ -1,0 +1,17 @@
+<mujoco model="ur5_velocity_actuators">
+  <!-- Modified from: https://github.com/cxy1997/Robotiq-UR5/tree/master/xmls -->
+  <default>
+        <joint damping="1" frictionloss ="0"/>
+        <velocity kv="2" gear = "1"/>
+    </default>
+
+    <actuator>
+        <velocity name="joint1_velocity" joint="joint1"/>
+        <velocity name="joint2_velocity" joint="joint2"/>
+        <velocity name="joint3_velocity" joint="joint3"/>
+        <velocity name="joint4_velocity" joint="joint4"/>
+        <velocity name="joint5_velocity" joint="joint5"/>
+        <velocity name="joint6_velocity" joint="joint6"/>
+        <!--velocity name="gripper_velocity" joint="gripper_joint_left" gear="0.04" /-->
+    </actuator>
+</mujoco>

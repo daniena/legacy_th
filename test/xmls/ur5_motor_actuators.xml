@@ -1,0 +1,15 @@
+<mujoco model="ur5_motor_actuators">
+    <!-- Modified from: https://github.com/cxy1997/Robotiq-UR5/tree/master/xmls -->
+    <default>
+        <motor gear="0.8"/>
+    </default>
+
+    <actuator>
+        <motor name="joint1_motor" joint="joint1" gear="1.2"/>
+        <motor name="joint2_motor" joint="joint2"/>
+        <motor name="joint3_motor" joint="joint3"/>
+        <motor name="joint4_motor" joint="joint4"/>
+        <motor name="joint5_motor" joint="joint5"/>
+        <motor name="joint6_motor" joint="joint6"/>
+    </actuator>
+</mujoco>
