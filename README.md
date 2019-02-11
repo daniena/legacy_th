@@ -14,3 +14,10 @@ What this is:
  - run_extrasets generates extra and correctly separate validation and test sets, which run_dataset does not
  - run_plot makes additional plot of the training process, and requires run_extrasets to be run to do so
  - session contains all the function calls made in the project
+
+
+The morestat branch focuses on gathering more rigorous statistical metrics on simpler cases. It also makes a few changes to the code:
+ - It introduces a slotted input representation version which works on a normalized relative difference vector rather than absolute position
+ - It sets up an experiment to test different time-steps with the MTPIK (dt=0.02 vs dt= higher (e.g. 1))
+ - It sets up metrics in the infer module which sums the time spent inside obstacles of each model, and the time until convergence, of the different models.z
+ - It generates O and eed only once for the training set, and generates many episodes of different q0 on the same task environment
