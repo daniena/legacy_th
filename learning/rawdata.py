@@ -61,7 +61,7 @@ def spherical_coordinates(v):
 
 _min_distance_activation_threshold = 0.0000 # Activate ONLY when it is ON the border of an obstacle! (used 0.00001 epsilon earlier, bad idea because solution algorithm uses an extra room of 0.0 once circle_of_acceptance was added to it)
 _circle_of_acceptance = 0.02 # ToDo: This should rather be imported from simulation.parameters
-def obstacle_matrix_spherical_base_frame(obstacles_buffer, p, resolution, min_distance_activation_threshold):
+def obstacle_matrix_spherical_base_frame(obstacles_buffer, ee, resolution, min_distance_activation_threshold):
 
     spherical_pixel_matrix = np.zeros(resolution)
     
@@ -74,7 +74,7 @@ def obstacle_matrix_spherical_base_frame(obstacles_buffer, p, resolution, min_di
         radius = obstacle[3]
         if radius < 0.00001:
             continue
-        diff_vector = vector(center) - vector(p) # in the base-frame of the robot, i.e. each position in the matrix represents static directions for the ur5 because it does not move or rotate its base frame
+        diff_vector = vector(center) - vector(ee) # in the base-frame of the robot, i.e. each position in the matrix represents static directions for the ur5 because it does not move or rotate its base frame
         (distance_to_center, elevation, azimuth) = spherical_coordinates(diff_vector)
 
         #elevation += pi/2 # So it goes from 0 to pi instead of -pi/2 to pi/2
@@ -106,7 +106,7 @@ def VIK_IO_from_rawdata(random, datapath, filenames, max_obstacles):
 
     summaries = pd.read_csv(datapath + 'episodes_summaries.csv', index_col=[0,1])
 
-    inputs = ['q', 'p_des']
+    inputs = ['q', 'ee_des']
     outputs = ['f1']
 
     numsteps_episode = [ int(summaries.at[(filename, 'num_timesteps'), 'extra']) for filename in filenames ]
@@ -140,7 +140,7 @@ def CAVIKAUGee_slots_IO_from_rawdata(random, datapath, filenames, max_obstacles)
     summaries = pd.read_csv(datapath + 'episodes_summaries.csv', index_col=[0,1])
 
 
-    inputs = ['q', 'p_des', 'obst_slots']
+    inputs = ['q', 'ee_des', 'obst_slots']
     outputs = ['q_dot_ref']
 
     numsteps_episode = [ int(summaries.at[(filename, 'num_timesteps'), 'extra']) for filename in filenames ]
@@ -187,7 +187,7 @@ def CAVIKee_slots_IO_from_rawdata(random, datapath, filenames, max_obstacles):
     summaries = pd.read_csv(datapath + 'episodes_summaries.csv', index_col=[0,1])
 
 
-    inputs = ['q', 'p_des', 'obst_slots']
+    inputs = ['q', 'ee_des', 'obst_slots']
     outputs = ['q_dot_ref']
 
     numsteps_episode = [ int(summaries.at[(filename, 'num_timesteps'), 'extra']) for filename in filenames ]
@@ -235,7 +235,7 @@ def CAVIKee_sphere_IO_from_rawdata(random, datapath, filenames, max_obstacles):
 
     summaries = pd.read_csv(datapath + 'episodes_summaries.csv', index_col=[0,1])
 
-    inputs = ['q', 'p_des', 'obst_slots']
+    inputs = ['q', 'ee_des', 'obst_slots']
     outputs = ['q_dot_ref']
 
     numsteps_episode = [ int(summaries.at[(filename, 'num_timesteps'), 'extra']) for filename in filenames ]
@@ -259,8 +259,8 @@ def CAVIKee_sphere_IO_from_rawdata(random, datapath, filenames, max_obstacles):
 
         all_timesteps_obstacle_pixel_array = np.zeros((numsteps_episode[i], CAVIKee_sphere_resolution[0]*CAVIKee_sphere_resolution[1]))
         for timestep_i in range(numsteps_episode[i]):
-            p = episode[timestep_i,6:9]
-            obstacle_pixel_matrix = obstacle_matrix_spherical_base_frame(obstacles_buffer, p, CAVIKee_sphere_resolution, _min_distance_activation_threshold)
+            ee = episode[timestep_i,6:9]
+            obstacle_pixel_matrix = obstacle_matrix_spherical_base_frame(obstacles_buffer, ee, CAVIKee_sphere_resolution, _min_distance_activation_threshold)
             obstacle_pixel_array = [ pixel for row in obstacle_pixel_matrix for pixel in row ]
             all_timesteps_obstacle_pixel_array[timestep_i, :] = obstacle_pixel_array
 
@@ -278,9 +278,9 @@ def CAVIKee_sphere_IO_from_rawdata(random, datapath, filenames, max_obstacles):
 def CAVIKee_sphere_input_from_CAVIKee_slots_IO(slotted_input, max_obstacles, mean, std):
     obstacles_buffer = make_obstacles_buffer(slotted_input[9:], max_obstacles)
 
-    p = forward_kinematic_position(vector(slotted_input[0:6]))
+    ee = forward_kinematic_position(vector(slotted_input[0:6]))
     
-    obstacle_pixel_matrix =  obstacle_matrix_spherical_base_frame(obstacles_buffer, p, CAVIKee_sphere_resolution, _min_distance_activation_threshold)
+    obstacle_pixel_matrix =  obstacle_matrix_spherical_base_frame(obstacles_buffer, ee, CAVIKee_sphere_resolution, _min_distance_activation_threshold)
     obstacle_pixel_array = [ pixel for row in obstacle_pixel_matrix for pixel in row ]
     
     sphereified_input = np.hstack(((slotted_input[0:9]-mean)/std, obstacle_pixel_array))
@@ -293,9 +293,9 @@ CAVIKAUGee_sphere_num_outputs = 3+6+6 #15
 def CAVIKAUGee_sphere_input_from_CAVIKee_slots_IO(slotted_input, max_obstacles, mean, std):
     obstacles_buffer = make_obstacles_buffer(slotted_input[9:], max_obstacles)
 
-    p = forward_kinematic_position(vector(slotted_input[0:6]))
+    ee = forward_kinematic_position(vector(slotted_input[0:6]))
     
-    obstacle_pixel_matrix =  obstacle_matrix_spherical_base_frame(obstacles_buffer, p, CAVIKAUGee_sphere_resolution, _min_distance_activation_threshold)
+    obstacle_pixel_matrix =  obstacle_matrix_spherical_base_frame(obstacles_buffer, ee, CAVIKAUGee_sphere_resolution, _min_distance_activation_threshold)
     obstacle_pixel_array = [ pixel for row in obstacle_pixel_matrix for pixel in row ]
     
     sphereified_input = np.hstack(((slotted_input[0:9]-mean)/std, obstacle_pixel_array))
