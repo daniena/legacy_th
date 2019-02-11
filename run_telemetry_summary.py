@@ -34,6 +34,7 @@ def make_telemetry_summary():
                 'seed102_CAVIKAUGee_no_obst_nume30_numt1000']
 
     for subpath in subpaths:
+        print('Summarizing from subpath: ' + subpath)
         telemetry_model_summary(subpath)
 
 
