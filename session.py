@@ -90,7 +90,7 @@ def CAI_random(seed, iterate_seed=False):
 from run_generate import *
 from run_dataset import *
 from run_train import *
-from run_telemetry import *
+from run_telemetry_summary import *
 from run_extrasets import *
 from run_plots import *
 
@@ -164,7 +164,7 @@ if __name__ == '__main__':
     
     #CAVIKAUGee_sphere_train_SGDnormal_well_connected(datapath, epochs, batch_size, checkpoint_period) #SGDcustom wins over SGD it seems
 
-    make_telemetry() # telemetry_summary is made human readable in telemetry_summary.ipynb
+    make_telemetry_summary() # Prints out the summary for each model
     make_extrasets()
     make_plots()
     
