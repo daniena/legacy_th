@@ -13,4 +13,5 @@ What this is:
  - run_infer gathers data on the trained models, and makes the calls to generate the plots, as well as the DataFrames necessary for telemetry_summary.ipynb
  - run_extrasets generates extra and correctly separate validation and test sets, which run_dataset does not
  - run_plot makes additional plot of the training process, and requires run_extrasets to be run to do so
+ - run_telemetry_summary filters the performance of each model into a human readable format as seen in the summary of table 6.1
  - session contains all the function calls made in the project
