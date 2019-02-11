@@ -106,7 +106,7 @@ def VIK_IO_from_rawdata(random, datapath, filenames, max_obstacles):
 
     summaries = pd.read_csv(datapath + 'episodes_summaries.csv', index_col=[0,1])
 
-    inputs = ['q', 'p_des']
+    inputs = ['q', 'ee_des']
     outputs = ['f1']
 
     numsteps_episode = [ int(summaries.at[(filename, 'num_timesteps'), 'extra']) for filename in filenames ]
@@ -140,7 +140,7 @@ def CAVIKAUGee_slots_IO_from_rawdata(random, datapath, filenames, max_obstacles)
     summaries = pd.read_csv(datapath + 'episodes_summaries.csv', index_col=[0,1])
 
 
-    inputs = ['q', 'p_des', 'obst_slots']
+    inputs = ['q', 'ee_des', 'obst_slots']
     outputs = ['q_dot_ref']
 
     numsteps_episode = [ int(summaries.at[(filename, 'num_timesteps'), 'extra']) for filename in filenames ]
@@ -187,7 +187,7 @@ def CAVIKee_slots_IO_from_rawdata(random, datapath, filenames, max_obstacles):
     summaries = pd.read_csv(datapath + 'episodes_summaries.csv', index_col=[0,1])
 
 
-    inputs = ['q', 'p_des', 'obst_slots']
+    inputs = ['q', 'ee_des', 'obst_slots']
     outputs = ['q_dot_ref']
 
     numsteps_episode = [ int(summaries.at[(filename, 'num_timesteps'), 'extra']) for filename in filenames ]
@@ -235,7 +235,7 @@ def CAVIKee_sphere_IO_from_rawdata(random, datapath, filenames, max_obstacles):
 
     summaries = pd.read_csv(datapath + 'episodes_summaries.csv', index_col=[0,1])
 
-    inputs = ['q', 'p_des', 'obst_slots']
+    inputs = ['q', 'ee_des', 'obst_slots']
     outputs = ['q_dot_ref']
 
     numsteps_episode = [ int(summaries.at[(filename, 'num_timesteps'), 'extra']) for filename in filenames ]
@@ -259,7 +259,7 @@ def CAVIKee_sphere_IO_from_rawdata(random, datapath, filenames, max_obstacles):
 
         all_timesteps_obstacle_pixel_array = np.zeros((numsteps_episode[i], CAVIKee_sphere_resolution[0]*CAVIKee_sphere_resolution[1]))
         for timestep_i in range(numsteps_episode[i]):
-            p = episode[timestep_i,6:9]
+            ee = episode[timestep_i,6:9]
             obstacle_pixel_matrix = obstacle_matrix_spherical_base_frame(obstacles_buffer, ee, CAVIKee_sphere_resolution, _min_distance_activation_threshold)
             obstacle_pixel_array = [ pixel for row in obstacle_pixel_matrix for pixel in row ]
             all_timesteps_obstacle_pixel_array[timestep_i, :] = obstacle_pixel_array
